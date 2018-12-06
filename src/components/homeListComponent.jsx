@@ -75,7 +75,7 @@ class HomeListComponent extends Component {
 
             return ( 
                <React.Fragment>
-                   <div class="row">
+                   <div className="row justify-content-center">
                         {items.results.map(item =>
                             (
                                 <React.Fragment key={item.id}>
@@ -84,10 +84,9 @@ class HomeListComponent extends Component {
                                         <div className="card-body">
                                             <h5 className="card-title">{item.title}</h5>
                                             <h6 className="card-title" style={this.priceStyle}>Rp.{item.price},-</h6>
-                                            <a href="#" className="btn btn-primary">Go somewhere</a>
+                                            <a className="btn btn-primary" onClick={this.props.someVar}>Go somewhere</a>
                                         </div>
                                     </div>
-                                    <br/>
                                 </React.Fragment>
                         ))} 
                     </div>
