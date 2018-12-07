@@ -2,33 +2,43 @@ import React, { Component } from 'react';
 import './App.css';
 import NavBar from './components/navbarComponent';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {
+    Route,
+    BrowserRouter
+} from "react-router-dom";
 import HomeListComponent from './components/homeListComponent';
+import DetailComponent from './components/detailComponent';
 
 class App extends Component {
 
-  constructor(props) {
-    super(props)
+  constructor(props)
+    {
+        super(props);
+        this.state =
+        {
+            movieID : 2
+        }
+    }
 
-    this.handler = this.handler.bind(this)
-  }
-
-  handler() {
+  changeMovieId(id)
+  {
     this.setState({
-      someVar: 'asd'
-    })
+      movieID : id,
+    });
   }
 
   render() {
 
-    console.log(this.someVar);
-
     return (
-      <React.Fragment>
-        <NavBar/>
-          <main className="justify-content-center">
-            <HomeListComponent></HomeListComponent>
-          </main>
-      </React.Fragment>
+      <BrowserRouter>
+          <React.Fragment>
+            <NavBar/>
+              <main className="justify-content-center">
+                <Route exact path='/' component={HomeListComponent}/>
+                <Route path='/:id' component={DetailComponent}/>
+              </main>
+          </React.Fragment>
+      </BrowserRouter>
     );
   }
 }
