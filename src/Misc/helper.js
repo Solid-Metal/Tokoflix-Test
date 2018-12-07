@@ -33,7 +33,6 @@ const helper =
     }
     ,formatString: function(data)
     {
-        
         let tempstring = '';
         for(let i = 0; i < data.length; i++)
         {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import helper from '../Misc/helper'
+import helper from '../misc/helper'
+import user from '../misc/user'
 import CurrencyFormat from 'react-currency-format';
 
 class HomeListComponent extends Component {

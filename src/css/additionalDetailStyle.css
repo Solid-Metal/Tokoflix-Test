@@ -1,0 +1,14 @@
+.slick-next
+{
+    right: 50px; 
+    transform: scale(3);
+    top: 150px;
+}
+
+.slick-prev
+{
+    top: 150px;
+    left:50px;
+    z-index:1000;
+    transform: scale(3);
+}
