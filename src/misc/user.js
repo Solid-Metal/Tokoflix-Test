@@ -29,7 +29,7 @@ const user = {
       let money = localStorage.getItem("money");
       money -= price;
       localStorage.setItem("money", money);
-      return 'ok';
+      return 'Sucessfully buy the movie.';
     }
   }
 };
