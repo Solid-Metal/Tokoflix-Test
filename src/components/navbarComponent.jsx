@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import helper from "../misc/helper";
 import CurrencyFormat from "react-currency-format";
 
 class NavBar extends Component {
