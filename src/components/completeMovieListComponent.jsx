@@ -4,9 +4,8 @@ import "../css/additionalDetailStyle.css";
 import helper from "../misc/helper";
 import CurrencyFormat from "react-currency-format";
 import { NavLink } from "react-router-dom";
-import { withRouter } from "react-router-dom";
 
-class HomeListComponent extends Component {
+class CompleteMovieListComponent extends Component {
   date = moment().format("YYYY-MM-DD");
   dateprev = moment()
     .subtract(1, "month")
@@ -34,10 +33,10 @@ class HomeListComponent extends Component {
   }
 
   fetchData() {
+    console.log(this.props.match.params);
     this.linkToFetch =
-      "https://api.themoviedb.org/3/movie/now_playing?api_key=0d7fb7ecd25ddcc4c6b5410edec63559&language=en-US&region=ID&include_adult=true&page=" +
+      "https://api.themoviedb.org/3/discover/movie?api_key=0d7fb7ecd25ddcc4c6b5410edec63559&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=" +
       this.state.page;
-
     fetch(this.linkToFetch)
       .then(result => result.json())
       .then(json => {
@@ -78,7 +77,7 @@ class HomeListComponent extends Component {
       return (
         <React.Fragment>
           <div className="d-flex justify-content-center">
-            <i className="fa fa-spinner fa-spin fa-5x" />
+            <i class="fa fa-spinner fa-spin fa-5x" />
           </div>
         </React.Fragment>
       );
@@ -86,7 +85,7 @@ class HomeListComponent extends Component {
       return (
         <React.Fragment>
           <a className="navbar-brand d-flex justify-content-center" href="#">
-            <h1 className="display-4 text-dark">Now Playing !</h1>
+            <h1 className="display-4 text-dark">All Movies !</h1>
           </a>
           <div className="container mt-5">
             <div className="row justify-content-md-center">
@@ -97,7 +96,7 @@ class HomeListComponent extends Component {
                   hidden={page <= 1}
                   onClick={this.forceUpdateBack.bind(this)}
                   exact
-                  to={"/page=" + page}
+                  to={"/allmovies/page=" + page}
                 />
               </div>
               <div className="col-10">
@@ -123,7 +122,12 @@ class HomeListComponent extends Component {
                           <NavLink
                             className="btn btn-primary"
                             exact
-                            to={item.id + "-" + helper.replaceSpace(item.title)}
+                            to={
+                              "/" +
+                              item.id +
+                              "-" +
+                              helper.replaceSpace(item.title)
+                            }
                           >
                             DETAIL
                           </NavLink>
@@ -140,7 +144,7 @@ class HomeListComponent extends Component {
                   hidden={items.results.length < 20}
                   onClick={this.forceUpdate.bind(this)}
                   exact
-                  to={"/page=" + page}
+                  to={"/allmovies/page=" + page}
                 />
               </div>
             </div>
@@ -163,4 +167,4 @@ class HomeListComponent extends Component {
   };
 }
 
-export default withRouter(HomeListComponent);
+export default CompleteMovieListComponent;

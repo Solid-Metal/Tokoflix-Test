@@ -1,44 +1,69 @@
-import React, { Component } from 'react';
-import './App.css';
-import NavBar from './components/navbarComponent';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import {
-    Route,
-    BrowserRouter
-} from "react-router-dom";
-import HomeListComponent from './components/homeListComponent';
-import DetailComponent from './components/detailComponent';
+import React, { Component } from "react";
+import "./App.css";
+import NavBar from "./components/navbarComponent";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Route, BrowserRouter } from "react-router-dom";
+import HomeListComponent from "./components/homeListComponent";
+import DetailComponent from "./components/detailComponent";
+import CompleteMovieListComponent from "./components/completeMovieListComponent";
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      reload: 0
+    };
+  }
 
-  constructor(props)
-    {
-        super(props);
-        this.state =
-        {
-            movieID : 2
-        }
-    }
-
-  changeMovieId(id)
-  {
-    this.setState({
-      movieID : id,
-    });
+  setReload(test) {
+    this.setState(
+      {
+        reload: test
+      },
+      () => {
+        this.forceUpdate();
+      }
+    );
+    console.log(this.state.reload);
   }
 
   render() {
-
     return (
-      <BrowserRouter>
+      <React.Fragment>
+        <BrowserRouter>
           <React.Fragment>
-            <NavBar/>
-              <main className="justify-content-center">
-                <Route exact path='/' component={HomeListComponent}/>
-                <Route path='/:id' component={DetailComponent}/>
-              </main>
+            <NavBar reload={this.state.reload} />
+            <main className="justify-content-center">
+              <Route exact path="/" component={HomeListComponent} />
+              <Route
+                exact
+                path="/?:search=:page"
+                component={HomeListComponent}
+              />
+              <Route
+                exact
+                path="/allmovies/"
+                render={props => <CompleteMovieListComponent {...props} />}
+              />
+              <Route
+                exact
+                path="/allmovies/:search=:page"
+                render={props => <CompleteMovieListComponent {...props} />}
+              />
+              <Route
+                exact
+                path="/:id-:slug"
+                render={props => (
+                  <DetailComponent
+                    {...props}
+                    callback={this.setReload.bind(this)}
+                  />
+                )}
+              />
+            </main>
           </React.Fragment>
-      </BrowserRouter>
+        </BrowserRouter>
+      </React.Fragment>
     );
   }
 }
