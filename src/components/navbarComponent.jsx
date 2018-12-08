@@ -66,7 +66,7 @@ class NavBar extends Component {
               value={localStorage.getItem("money")}
               displayType={"text"}
               thousandSeparator={true}
-              prefix={""}
+              prefix={"Rp."}
             />
           </h2>
         </nav>

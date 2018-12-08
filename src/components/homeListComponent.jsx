@@ -114,7 +114,7 @@ class HomeListComponent extends Component {
                           <h5 className="card-title">{item.title}</h5>
                           <h6 className="card-title" style={this.priceStyle}>
                             <CurrencyFormat
-                              value={helper.checkPrice(items.vote_average)}
+                              value={helper.checkPrice(item.vote_average)}
                               displayType={"text"}
                               thousandSeparator={true}
                               prefix={"Rp."}

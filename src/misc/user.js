@@ -20,6 +20,7 @@ const user = {
 
   buyMovie: function(id, price) {
     if (localStorage.getItem("money") < price) {
+      return "Insufficient Fund";
     } else {
       let listItem = JSON.parse(localStorage.getItem("itemList"));
       listItem.push(id);
@@ -28,6 +29,7 @@ const user = {
       let money = localStorage.getItem("money");
       money -= price;
       localStorage.setItem("money", money);
+      return 'ok';
     }
   }
 };

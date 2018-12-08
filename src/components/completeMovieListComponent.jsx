@@ -77,7 +77,7 @@ class CompleteMovieListComponent extends Component {
       return (
         <React.Fragment>
           <div className="d-flex justify-content-center">
-            <i class="fa fa-spinner fa-spin fa-5x" />
+            <i className="fa fa-spinner fa-spin fa-5x" />
           </div>
         </React.Fragment>
       );

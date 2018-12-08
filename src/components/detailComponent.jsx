@@ -5,10 +5,30 @@ import CurrencyFormat from "react-currency-format";
 import Slider from "react-slick";
 import user from "../misc/user";
 import { NavLink } from "react-router-dom";
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css'
 
 class DetailComponent extends Component {
   id = "";
   price = "";
+
+  submit = () => {
+    confirmAlert({
+      title: 'Please Confirm',
+      message: 'Are you sure to buy this movie ?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => this.buyMovie()
+        },
+        {
+          label: 'No',
+          onClick: () => alert('Transaction Canceled')
+        }
+      ]
+    })
+  };
+
 
   constructor(props) {
     super(props);
@@ -36,7 +56,9 @@ class DetailComponent extends Component {
   }
 
   buyMovie() {
-    user.buyMovie(this.id, this.price);
+    let stat = user.buyMovie(this.id, this.price);
+
+    alert(stat);
 
     this.setState(
       {
@@ -127,7 +149,7 @@ class DetailComponent extends Component {
     let imageLink = "https://image.tmdb.org/t/p/w185_and_h278_bestv2/";
 
     var settings = {
-      dots: true,
+      dots: false,
       infinite: false,
       speed: 500,
       slidesToShow: 6,
@@ -139,7 +161,7 @@ class DetailComponent extends Component {
       return (
         <React.Fragment>
           <div className="d-flex justify-content-center">
-            <i class="fa fa-spinner fa-spin fa-5x" />
+            <i className="fa fa-spinner fa-spin fa-5x" />
           </div>
         </React.Fragment>
       );
@@ -206,12 +228,12 @@ class DetailComponent extends Component {
                 </div>
                 <div className="col" align="center">
                   <span className="fa fa-2x fa-money" />
-                  <h2>
+                  <h2 className='text-warning'>
                     <CurrencyFormat
                       value={helper.checkPrice(items.vote_average)}
                       displayType={"text"}
                       thousandSeparator={true}
-                      prefix={"Rp"}
+                      prefix={"Rp."}
                     />
                   </h2>
                 </div>
@@ -226,7 +248,7 @@ class DetailComponent extends Component {
                     <h1>
                       <button
                         className="btn btn-danger"
-                        onClick={this.buyMovie.bind(this)}
+                        onClick={this.submit}
                       >
                         Click here to buy
                       </button>
@@ -254,7 +276,7 @@ class DetailComponent extends Component {
             <h1>Casts</h1>
             <Slider {...settings}>
               {crew.map((item, index) => (
-                <div>
+                <div key={item.id}>
                   <div className="card">
                     <img
                       className="card-img-left"
@@ -279,7 +301,7 @@ class DetailComponent extends Component {
             <Slider {...settings}>
               {similarMovies.map((item, index) => (
                 <React.Fragment key={item.id}>
-                  <div className="card  mx-0" style={this.imgStyle}>
+                  <div className="card mx-0" style={this.imgStyle}>
                     <img
                       className="card-img-left"
                       src={imageLink + item.poster_path}
