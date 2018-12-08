@@ -41,6 +41,7 @@ class DetailComponent extends Component {
       spokenLang: [],
       crew: [],
       similarMovies: [],
+      reccomendation:[],
       reload: 0
     };
 
@@ -92,7 +93,8 @@ class DetailComponent extends Component {
         });
 
         this.fetchCrew();
-        this.fetchSimilarMovies(this.state.genres[0].id);
+        this.fetchSimilarMovies(this.state.items.id);
+        this.fetchReccomendation(this.state.items.id);
       });
   }
 
@@ -110,15 +112,26 @@ class DetailComponent extends Component {
       });
   }
 
-  fetchSimilarMovies(genres) {
+  fetchSimilarMovies(id) {
     fetch(
-      "https://api.themoviedb.org/3/discover/movie?api_key=0d7fb7ecd25ddcc4c6b5410edec63559&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=" +
-        genres
+     'https://api.themoviedb.org/3/movie/'+id+'/similar?api_key=0d7fb7ecd25ddcc4c6b5410edec63559&language=en-US&page=1'
     )
       .then(result => result.json())
       .then(json => {
         this.setState({
           similarMovies: json.results
+        });
+      });
+  }
+
+  fetchReccomendation(id) {
+    fetch(
+     'https://api.themoviedb.org/3/movie/'+id+'/recommendations?api_key=0d7fb7ecd25ddcc4c6b5410edec63559&language=en-US&page=1'
+    )
+      .then(result => result.json())
+      .then(json => {
+        this.setState({
+          reccomendation: json.results
         });
       });
   }
@@ -143,7 +156,8 @@ class DetailComponent extends Component {
       spokenLang,
       crew,
       isLoaded,
-      similarMovies
+      similarMovies,
+      reccomendation
     } = this.state;
     this.price = helper.checkPrice(items.vote_average);
     let imageLink = "https://image.tmdb.org/t/p/w185_and_h278_bestv2/";
@@ -300,6 +314,34 @@ class DetailComponent extends Component {
             <h1>Similar Movies</h1>
             <Slider {...settings}>
               {similarMovies.map((item, index) => (
+                <React.Fragment key={item.id}>
+                  <div className="card mx-0" style={this.imgStyle}>
+                    <img
+                      className="card-img-left"
+                      src={imageLink + item.poster_path}
+                      alt="Card cap"
+                    />
+                    <div className="card-body">
+                      <h5 className="card-title">{item.title}</h5>
+                      <NavLink
+                        onClick={this.forceUpdate.bind(this)}
+                        className="btn btn-primary"
+                        exact
+                        to={item.id + "-" + helper.replaceSpace(item.title)}
+                      >
+                        DETAIL
+                      </NavLink>
+                    </div>
+                  </div>
+                </React.Fragment>
+              ))}
+            </Slider>
+          </div>
+        
+          <div className="card w-75 mx-auto mt-3 px-3 border pb-3">
+            <h1>Recommendation</h1>
+            <Slider {...settings}>
+              {reccomendation.map((item, index) => (
                 <React.Fragment key={item.id}>
                   <div className="card mx-0" style={this.imgStyle}>
                     <img
