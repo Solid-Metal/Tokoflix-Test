@@ -1,4 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This Project was made for Tokopedia entry test , By : Bagus Santoso
 
 ## Available Scripts
 
